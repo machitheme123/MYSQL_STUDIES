@@ -1,0 +1,257 @@
+use osh;
+
+drop table emp;
+use osh;
+
+CREATE TABLE  PLAYER (
+PLAYER_ID     CHAR(7) NOT NULL,
+PLAYER_NAME   VARCHAR(20) NOT NULL,
+TEAM_ID       CHAR(3) NOT NULL,
+E_PLAYER_NAME VARCHAR(40),
+NICKNAME      VARCHAR(30),
+JOIN_YYYY     CHAR(4),
+POSITION      VARCHAR(10),
+BACK_NO       int(2),
+NATION        VARCHAR(20),
+BIRTH_DATE    DATE,
+SOLAR         CHAR(1),
+HEIGHT        int(3),
+WEIGHT        int(3),
+CONSTRAINT PLAYER_PK PRIMARY  KEY (PLAYER_ID),
+CONSTRAINT PLAYER_FK FOREIGN KEY (TEAM_ID) REFERENCES TEAM(TEAM_ID)
+);
+
+create table dept(
+dept_id char NOT NULL,
+dept_name varchar(10) NOT NULL,
+
+constraint dept_pk primary key (dept_id)
+);
+
+create table emp (
+emp_id int(3) NOT NULL,
+emp_name char(4) NOT NULL,
+email VARCHAR(100), 
+BIRTH_DAY DATE,
+dept_id char(10) NOT NULL,
+constraint emp_PK primary key (emp_id)
+);
+
+alter table emp add (phone_number varchar(10));
+
+alter table emp drop column phone_number;
+
+alter table emp modify email varchar(50);
+
+alter table emp 
+change BIRTH_DAY brt_day varchar(10);
+
+ALTER TABLE emp ADD constraint emp_FK foreign key (dept_id) references dept(dept_id);
+
+drop table employee;
+
+truncate table player;
+
+# ====================== Data Definition language (DDL) =====================
+
+# target
+insert into player(player_id, player_name, team_id) 
+values ('2012138', 'pjb', 'K06');
+
+select *
+from player;
+
+# whole
+insert into player
+values ('2012138', 'pjb', 'K06',~~~~~~~);
+
+SET SQL_SAFE_UPDATES = 0;
+
+update player 
+set player_name = '박진배'
+where player_name = 'pjb';
+
+delete
+from player
+where player_id = '2012138';
+
+select player_id as ID, concat_Ws(player_name, height, weight)
+from player;
+
+select *
+from player
+where team_id != 'K01';
+
+
+select*
+from player
+where PLAYER_NAME like '%광%';
+
+
+
+delete 
+from  player
+where PLAYER_ID = '2007313';
+
+
+
+
+
+select *
+from player;
+
+
+update player
+set team_id = 'K08'
+where player_id='2000011';
+
+select*
+from player
+where  player_id='2000011';
+
+##select 뒤에는 column 명을 적거나 *로 전체선택 
+
+select height/weight
+from player;
+
+select*
+from player;
+
+select *
+from player
+where weight > 70 and weight <80;
+
+
+alter table player drop column nation;
+
+select*
+from player;
+
+alter table player add (nation varchar(20));
+
+select*
+from player;
+
+rename table emp to employee;
+
+
+
+a= input
+b= input
+c=input
+sql_obj = sql.connection()
+sql_obj.excute( "insert into player(player_id, player_name, team_id) values (%s,%s,%s); ".format(a,b,c));
+
+
+
+select *
+from player
+where height is not null
+order by height desc
+limit 5;
+
+
+select *
+from player
+where height is not null
+order by height asc
+limit 5;
+
+
+
+select player_name
+from player;
+#==================================================
+
+select *
+from player;
+
+
+
+select player_name,length(player_name), char_length(player_name)
+from player;
+
+select TRIM(leading 'a' from "aaaaa안녕aa")
+from dual;
+
+select ltrim("    aa")
+from dual;
+
+select ceiling(38.123)
+from dual;
+
+
+use osh;
+
+select player_name, birth_date, date_format(birth_date,'%d/%m%/%Y')
+from player;
+
+select player_name, cast(20221206 as date), cast(2.0 as integer)
+from player;
+
+
+
+select player_name, height, case
+								when height > 180
+									then 'high'
+								when height >170
+									then 'mid'
+								else 'low' 
+								end as height_grade								
+from player;
+
+
+select player_name, height, if(height = 180, 'high', if(height = 170, 'mid','low'))							
+from player;
+
+
+set SQL_SAFE_UPDATES = 0;
+
+
+update player
+set nation = null
+where nation = '';
+
+
+select player_name, nation, ifnull(nation,'not'), weight, nullif(weight,72), nation, nullif(nation,'나이지리아') 
+from player;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
